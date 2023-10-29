@@ -174,18 +174,25 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   scoreboardCellText: {
-    fontSize: 16,
+    fontSize: 12,
     color: '#2B2B52',
+    flex: 1,
+    flexWrap: 'wrap',
+    paddingHorizontal: 5
   },
   scoreboardClearButton: {
     backgroundColor: '#FF5733',
     padding: 10,
     borderRadius: 5,
-    marginTop: 20,
   },
   scoreboardClearButtonText: {
     color: 'white',
     textAlign: 'center',
     fontSize: 18,
+  },  iconContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

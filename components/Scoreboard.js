@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import { NBR_OF_SCOREBOARD_ROWS, SCOREBOARD_KEY } from "../constants/Game";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../style/style";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 export default Scoreboard = ({navigation}) => {
 
@@ -85,7 +86,7 @@ export default Scoreboard = ({navigation}) => {
         style={styles.scoreboardClearButton}
         onPress={() => clearScoreboard()}
         >
-        <Text style={styles.scoreboardClearButtonText}>CLEAR</Text>
+        <Text style={styles.scoreboardClearButtonText}> <MaterialCommunityIcons name="trash-can" size={20}/>CLEAR</Text>
         </TouchableOpacity>
     </View>
     )}

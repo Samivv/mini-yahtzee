@@ -58,6 +58,10 @@ export default Gameboard = ({ navigation, route}) => {
             selectedPoints[i] = true
             let nbrOfDices = diceSpots.reduce((total, x) => (x === (i+1) ? total + 1: total),0)
             points[i] = nbrOfDices * (i+1)
+            if(points[i] >= BONUS_POINTS_LIMIT) {
+                points[i] += BONUS_POINTS
+            }
+
         } else {
             setStatus("You already selected points for " + (i+1))
             return points[i]
@@ -71,14 +75,19 @@ export default Gameboard = ({ navigation, route}) => {
     }
 }
     const savePlayerPoints = async() => {
+        let points = dicePointsTotal.reduce((total, x) => total + x, 0)
+        if(points == 0) {
+            setStatus("You have to select points first")
+            return 1
+        }
         const timeDate = new Date()
         const newKey = scores.length + 1
         const playerPoints = {
             key: newKey,
             name: playerName,
-            date: timeDate.toLocaleDateString(),
-            time: timeDate.toLocaleTimeString(),
-            points: dicePointsTotal.reduce((total, x) => total + x, 0)
+            date: timeDate.toLocaleDateString([], {day: '2-digit', month: '2-digit', year: '2-digit'}),
+            time: timeDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            points: points
         }
         try {
             const newScore = [...scores, playerPoints]
@@ -87,6 +96,7 @@ export default Gameboard = ({ navigation, route}) => {
         } catch(error) {
             console.log("Save error: " + error.message)
         }
+        setStatus("Points saved")
     }
     const getScoreboardData = async() => {
         try {
@@ -103,7 +113,6 @@ export default Gameboard = ({ navigation, route}) => {
     function getSpotTotal(i) {
         return dicePointsTotal[i]
     }
-
     const throwDices = () => {
         if (nbrOfThrowsLeft===0 && !gameEndStatus) {
             setStatus("Select your points before the next throw")
@@ -125,8 +134,6 @@ export default Gameboard = ({ navigation, route}) => {
         setDiceSpots(spots)
         setStatus("Select and throw dices again")
     }
-
-
 
 
     function selectDice(i) {
@@ -172,16 +179,24 @@ export default Gameboard = ({ navigation, route}) => {
       })
       return unsubscribe
     },[navigation])
+
     
 
     return(
         <>
         <Header />
         <View style={style.container}>
+        <View style={style.iconContainer}>
+        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
+        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
+        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
+        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
+        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
+        </View>
         <Text style={style.playerNameText}>
             Good luck, <Text style={style.highlight}>{playerName}</Text>
         </Text>
-        <Text style={style.throwsText}>Throws left: {nbrOfThrowsLeft}</Text>
+        <Text style={style.throwsText}>Throws left: <Text style={{color: nbrOfThrowsLeft === 0 ? "red" : "black"}}>{nbrOfThrowsLeft}</Text></Text>
         <Text style={style.statusText}>{status}</Text>
         <Container fluid>
             <Row>{dicesRow}</Row>
