@@ -1,11 +1,10 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import Header from "./Header";
 import Footer from "./Footer";
 import style from "../style/style";
 import { useEffect, useState } from "react";
 import { NBR_OF_DICES, NBR_OF_THROWS,MAX_SPOT, MIN_SPOT, BONUS_POINTS_LIMIT, BONUS_POINTS, SCOREBOARD_KEY } from "../constants/Game";
 import { Container, Row, Col } from 'react-native-flex-grid';
-import { Pressable } from "react-native";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -32,7 +31,7 @@ export default Gameboard = ({ navigation, route}) => {
     const dicesRow = []
     for (let dice=0;dice < NBR_OF_DICES;dice++) {
         dicesRow.push(
-            <Col key={"dice"+dice}><Pressable key={"dice" + dice} onPress={() => selectDice(dice)}><MaterialCommunityIcons name={board[dice]} color={getDiceColor(dice)} size={50} key={"dice"+dice}/></Pressable></Col>
+            <Col key={"dice"+dice}><TouchableOpacity key={"dice" + dice} onPress={() => selectDice(dice)}><MaterialCommunityIcons name={board[dice]} color={getDiceColor(dice)} size={50} key={"dice"+dice}/></TouchableOpacity></Col>
         )
     }
 
@@ -47,7 +46,7 @@ export default Gameboard = ({ navigation, route}) => {
     const pointsToSelectRow = []
     for (let diceButton=0;diceButton < MAX_SPOT;diceButton++) {
         pointsToSelectRow.push(
-            <Col key={"buttonsRow"+diceButton}><Pressable key={"buttonsRow" + diceButton} onPress={() => selectDicePoints(diceButton)} ><MaterialCommunityIcons name={"numeric-"+(diceButton+1)+"-circle"} color={getDicePointsColor(diceButton)} size={35} key={"buttonsRow"+diceButton}/></Pressable></Col>
+            <Col key={"buttonsRow"+diceButton}><TouchableOpacity key={"buttonsRow" + diceButton} onPress={() => selectDicePoints(diceButton)} ><MaterialCommunityIcons name={"numeric-"+(diceButton+1)+"-circle"} color={getDicePointsColor(diceButton)} size={35} key={"buttonsRow"+diceButton}/></TouchableOpacity></Col>
         )
     } 
                                           
@@ -79,7 +78,7 @@ export default Gameboard = ({ navigation, route}) => {
             name: playerName,
             date: timeDate.toLocaleDateString(),
             time: timeDate.toLocaleTimeString(),
-            points: 0 //yhteispisteet bonus LISÄÄ!!!
+            points: dicePointsTotal.reduce((total, x) => total + x, 0)
         }
         try {
             const newScore = [...scores, playerPoints]
@@ -128,9 +127,7 @@ export default Gameboard = ({ navigation, route}) => {
     }
 
 
-    function getSpotTotal(i) {
-        return dicePointsTotal[i]
-    }
+
 
     function selectDice(i) {
         if(nbrOfThrowsLeft < NBR_OF_THROWS && !gameEndStatus) {
@@ -143,12 +140,24 @@ export default Gameboard = ({ navigation, route}) => {
     }
 
     function getDiceColor(i) {
-        return selectedDices[i] ? "black" : "steelblue"
+        return selectedDices[i] ? "#5e5eee" : "#2B2B52"
     }
 
     function getDicePointsColor(i) {
-        return selectedDicePoints[i] && !gameEndStatus ? "black" : "steelblue"
+        return selectedDicePoints[i] && !gameEndStatus ? "#5e5eee" : "#2B2B52"
     }
+
+    function restartGame() {
+        setNbOfThrowsLeft(NBR_OF_THROWS)
+        setDiceSpots(new Array(NBR_OF_DICES).fill(0))
+        setSelectedDices(new Array(NBR_OF_DICES).fill(false))
+        setSelectedDicePoints(new Array(MAX_SPOT).fill(false))
+        setDicePointsTotal(new Array(MAX_SPOT).fill(0))
+        setGameEndStatus(false)
+        setStatus("Throw dices")
+    }
+
+
 
     useEffect(() => {
         if(playerName === '' && route.params?.player) {
@@ -156,7 +165,6 @@ export default Gameboard = ({ navigation, route}) => {
         }
     }
     ,[])
-    
     
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -167,30 +175,39 @@ export default Gameboard = ({ navigation, route}) => {
     
 
     return(
-    <>
-        <   Header />
-            <View>
-            <Container fluid>
+        <>
+        <Header />
+        <View style={style.container}>
+        <Text style={style.playerNameText}>
+            Good luck, <Text style={style.highlight}>{playerName}</Text>
+        </Text>
+        <Text style={style.throwsText}>Throws left: {nbrOfThrowsLeft}</Text>
+        <Text style={style.statusText}>{status}</Text>
+        <Container fluid>
             <Row>{dicesRow}</Row>
-            </Container>
-            <Text style={style.throwsText}>Throws left: {nbrOfThrowsLeft}</Text>
-            <Text style={style.statusText}>{status}</Text>
-            <Pressable style={style.button}onPress={() => throwDices()}>
-            <Text style={style.buttonText}>THROW DICES</Text>
-            </Pressable>
-            <Container fluid>
+        </Container>
+        <Container fluid>
             <Row>{pointsRow}</Row>
-            </Container>
-            <Container fluid>
+        </Container>
+        <Container fluid>
             <Row>{pointsToSelectRow}</Row>
-            </Container>
-            <Pressable style={style.button} onPress={() => savePlayerPoints()}>
-            <Text style={style.buttonText}>SAVE POINTS</Text>
-            </Pressable>
-            <Text style={style.playerNameText}>Let the games begin {playerName}
-            </Text>
-            </View>
-            <Footer />
+        </Container>
+        <View style={style.buttonContainer}>
+        <TouchableOpacity style={style.button} onPress={() => throwDices()}>
+            <MaterialCommunityIcons name="dice-multiple" size={24} color="#F5F5F5" />
+            <Text style={style.buttonText}>THROW</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={style.button} onPress={() => savePlayerPoints()}>
+            <MaterialCommunityIcons name="content-save" size={24} color="#F5F5F5" />
+            <Text style={style.buttonText}>SAVE</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={style.button} onPress={() => restartGame()}>
+            <MaterialCommunityIcons name="restart" size={24} color="#F5F5F5" />
+            <Text style={style.buttonText}>RESTART</Text>
+        </TouchableOpacity>
+        </View>
+        </View>
+        <Footer />
         </>
     )
 }

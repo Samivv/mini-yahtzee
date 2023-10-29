@@ -25,7 +25,7 @@ export default function App() {
           }
           return <MaterialCommunityIcons name={iconName} size={size} color={color}/>
         },
-        tabBarActiveTintColor: 'steelblue',
+        tabBarActiveTintColor: '#5e5eee',
         tabBarInActiveTintColor: 'gray'
       })}
     >

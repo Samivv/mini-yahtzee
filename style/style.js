@@ -3,24 +3,22 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
   },
   header: {
     marginTop: 0,
-    marginBottom: 15,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#2B2B52',
     flexDirection: 'row',
   },
   footer: {
-    marginTop: "auto",
-    backgroundColor: 'skyblue',
+    marginTop: 'auto',
+    backgroundColor: '#2B2B52',
     flexDirection: 'row'
   },
   title: {
-    color: '#fff',
+    color: '#F5F5F5',
     fontWeight: 'bold',
     flex: 1,
     fontSize: 23,
@@ -28,7 +26,7 @@ export default StyleSheet.create({
     margin: 10,
   },
   author: {
-    color: '#fff',
+    color: '#F5F5F5',
     fontWeight: 'bold',
     flex: 1,
     fontSize: 15,
@@ -36,12 +34,12 @@ export default StyleSheet.create({
     margin: 10,
   },
   gameboard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center'
   },
   gameinfo: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 20,
@@ -54,19 +52,27 @@ export default StyleSheet.create({
   flex: {
     flexDirection: "row"
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
   button: {
-    margin: 30,
-    flexDirection: "row",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#2B2B52',
     padding: 10,
-    backgroundColor: "#73CED6",
-    width: 150,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center'
+    borderRadius: 5,
+    marginHorizontal: 5,
   },
   buttonText: {
-    color:"#2B2B52",
-    fontSize: 20
+    color:"#F5F5F5",
+    fontSize: 20,
+    textAlign: 'center',
+    marginLeft: 10,
   },
   playButton: {
     marginTop:50,
@@ -74,11 +80,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-    backgroundColor: 'green',
+    backgroundColor: '#2B2B52',
     padding: 10,
     borderRadius: 5,
   },
   icon: {
+    marginTop: 15,
     marginBottom: 20,
     alignSelf: 'center'
   },
@@ -90,7 +97,7 @@ export default StyleSheet.create({
   input: {
     height: 40,
     width: '80%',
-    borderColor: 'gray',
+    borderColor: '#2B2B52',
     alignSelf: 'center',
     borderWidth: 1,
     marginBottom: 10,
@@ -99,12 +106,12 @@ export default StyleSheet.create({
   okButton: {
     width: "80%",
     alignSelf:'center',
-    backgroundColor: 'green',
+    backgroundColor: '#2B2B52',
     padding: 10,
     borderRadius: 5,
   },
   okButtonText: {
-    color: 'white',
+    color: '#F5F5F5',
     textAlign: 'center',
   },
   highlight: {
@@ -120,13 +127,13 @@ export default StyleSheet.create({
       marginBottom: 20,
   },
   gameButton: {
-      backgroundColor: '#4CAF50',
+      backgroundColor: '#2B2B52',
       padding: 10,
       borderRadius: 5,
       marginVertical: 10,
   },
   gameText: {
-      color: 'white',
+      color: '#F5F5F5',
       textAlign: 'center',
       fontSize: 18,
   },
@@ -138,41 +145,47 @@ export default StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-  },scoreboardContainer: {
+  },
+  scoreboardContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-},
-scoreboardEmptyText: {
+    backgroundColor: '#F5F5F5',
+  },
+  scoreboardEmptyText: {
     fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
     marginTop: 100,
-},
-scoreboardRow: {
+    color: '#2B2B52',
+  },
+  scoreboardRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,
-},
-scoreboardCell: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#2B2B52',
+  },
+  scoreboardCell: {
     flex: 1,
     alignItems: 'center',
-},
-scoreboardCellText: {
+  },
+  scoreboardCellText: {
     fontSize: 16,
-},
-scoreboardClearButton: {
+    color: '#2B2B52',
+  },
+  scoreboardClearButton: {
     backgroundColor: '#FF5733',
     padding: 10,
     borderRadius: 5,
     marginTop: 20,
-},
-scoreboardClearButtonText: {
+  },
+  scoreboardClearButtonText: {
     color: 'white',
     textAlign: 'center',
     fontSize: 18,
-},
+  },
 });

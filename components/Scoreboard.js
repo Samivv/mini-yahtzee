@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import { Text, View, Pressable } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { DataTable } from "react-native-paper";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -42,30 +42,54 @@ export default Scoreboard = ({navigation}) => {
 
     return(
         <>
-            <Header />
-            <View>
-            { scores.length === 0 ?
-            <Text style={styles.scoreboardEmptyText}>Scoreboard is empty</Text> 
-                : scores.map((player, index) => (
-                //index < NBR_OF_SCOREBOARD_ROWS &&
-                <DataTable.Row style={styles.scoreboardRow}key={player.key}>
-                    <DataTable.Cell style={styles.scoreboardCell}><Text style={styles.scoreboardCellText}>{index + 1}.</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.scoreboardCell}><Text style={styles.scoreboardCellText}>{player.name}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.scoreboardCell}><Text style={styles.scoreboardCellText}>{player.date}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.scoreboardCell}><Text style={styles.scoreboardCellText}>{player.time}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.scoreboardCell}><Text style={styles.scoreboardCellText}>{player.points}</Text></DataTable.Cell>
-                </DataTable.Row>
-                ))
-        }
-            </View>
-           {  scores.length > 0 && 
-            <View>
-                <Pressable style={styles.scoreboardClearButton} onPress={() => clearScoreboard()}>
-                    <Text style={styles.scoreboardClearButtonText}>CLEAR</Text>
-                </Pressable>
-            </View>
-        }
-            <Footer />
+<Header />
+<ScrollView>
+    {scores.length === 0 ? (
+        <Text style={styles.scoreboardEmptyText}>Scoreboard is empty</Text>
+    ) : (
+        <DataTable>
+        <DataTable.Header>
+            <DataTable.Title>#Ranking</DataTable.Title>
+            <DataTable.Title>Player</DataTable.Title>
+            <DataTable.Title>Date</DataTable.Title>
+            <DataTable.Title>Time</DataTable.Title>
+            <DataTable.Title sortDirection="descending">Score</DataTable.Title>
+        </DataTable.Header>
+        {scores
+            .sort((a, b) => b.points - a.points)
+            .map((player, index) => (
+            <DataTable.Row style={styles.scoreboardRow} key={player.key}>
+                <DataTable.Cell style={styles.scoreboardCell}>
+                <Text style={styles.scoreboardCellText}>{index + 1}.</Text>
+                </DataTable.Cell>
+                <DataTable.Cell style={styles.scoreboardCell}>
+                <Text style={styles.scoreboardCellText}>{player.name}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell style={styles.scoreboardCell}>
+                <Text style={styles.scoreboardCellText}>{player.date}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell style={styles.scoreboardCell}>
+                <Text style={styles.scoreboardCellText}>{player.time}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell style={styles.scoreboardCell}>
+                <Text style={styles.scoreboardCellText}>{player.points}</Text>
+                </DataTable.Cell>
+            </DataTable.Row>
+            ))}
+        </DataTable>
+    )}
+    </ScrollView>
+    {scores.length > 0 && (
+    <View>
+        <TouchableOpacity
+        style={styles.scoreboardClearButton}
+        onPress={() => clearScoreboard()}
+        >
+        <Text style={styles.scoreboardClearButtonText}>CLEAR</Text>
+        </TouchableOpacity>
+    </View>
+    )}
+    <Footer />
         </>
     )
 }
