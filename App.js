@@ -4,10 +4,11 @@ import Scoreboard from './components/Scoreboard'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  
+  
   return (
     <NavigationContainer>
     <Tab.Navigator
@@ -25,13 +26,13 @@ export default function App() {
           }
           return <MaterialCommunityIcons name={iconName} size={size} color={color}/>
         },
-        tabBarActiveTintColor: '#5e5eee',
-        tabBarInActiveTintColor: 'gray'
+        tabBarStyle: {backgroundColor: "#2B2B52", borderTopWidth: 0,marginTop:0},
+        tabBarInactiveTintColor: "white",
       })}
     >
-      <Tab.Screen name="Home" component={Home} options={{tabBarStyle: { display: "none" }}}/>
-      <Tab.Screen name="Gameboard" component={Gameboard} />
-      <Tab.Screen name="Scoreboard" component={Scoreboard} />
+      <Tab.Screen name="Home" component={Home} options={{tabBarStyle: { display: "none" }, headerShown: false}}/>
+      <Tab.Screen name="Gameboard" component={Gameboard} options={{headerShown: false}}/>
+      <Tab.Screen name="Scoreboard" component={Scoreboard} options={{headerShown: false}}/>
       
     </Tab.Navigator>
     </NavigationContainer>

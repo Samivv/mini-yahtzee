@@ -9,13 +9,14 @@ export default StyleSheet.create({
   },
   header: {
     marginTop: 0,
+    paddingTop: 25,
     backgroundColor: '#2B2B52',
     flexDirection: 'row',
   },
   footer: {
     marginTop: 'auto',
     backgroundColor: '#2B2B52',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   title: {
     color: '#F5F5F5',
@@ -59,14 +60,25 @@ export default StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     paddingHorizontal: 20,
+
   },
   button: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#2B2B52',
     padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 5,
+  },
+  restartButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    // backgroundColor: '#2B2B52',
+    padding: 10,
+    // borderRadius: 5,
   },
   buttonText: {
     color:"#F5F5F5",
@@ -76,6 +88,16 @@ export default StyleSheet.create({
   },
   playButton: {
     marginTop:50,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+    backgroundColor: '#2B2B52',
+    padding: 10,
+    borderRadius: 5,
+  },
+  playButton2: {
+    marginTop:10,
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
@@ -116,7 +138,13 @@ export default StyleSheet.create({
   },
   highlight: {
     fontWeight: 'bold',
-
+  },
+  highlightCentered: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    borderBottomWidth: 2,
+    borderBottomColor: '#2B2B52',
   },
   throwsText: {
       fontSize: 18,
@@ -125,6 +153,7 @@ export default StyleSheet.create({
   statusText: {
       fontSize: 16,
       marginBottom: 20,
+      color: 'green'
   },
   gameButton: {
       backgroundColor: '#2B2B52',
@@ -158,8 +187,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    marginTop: 100,
     color: '#2B2B52',
+  },
+  scoreboardEmptyIcon: {
+    marginTop: 100,
+    justifyContent: 'center', 
+    alignItems: 'center',
   },
   scoreboardRow: {
     flexDirection: 'row',
@@ -194,5 +227,20 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+  }, statusBox: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: 'lightgray',
+    padding: 5,
+    borderRadius: 5,
   },
+  statusLabel: {
+    fontWeight: 'bold',
+    marginRight: 5,
+  },
+  statusText: {
+    fontWeight: 'bold',
+  },
+
 });

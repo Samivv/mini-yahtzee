@@ -46,7 +46,10 @@ export default Scoreboard = ({navigation}) => {
 <Header />
 <ScrollView>
     {scores.length === 0 ? (
+        <View style={styles.scoreboardEmptyIcon}>
+        <MaterialCommunityIcons name="clipboard-alert-outline" size={100} style={styles.scoreboardEmptyIcon}/>
         <Text style={styles.scoreboardEmptyText}>Scoreboard is empty</Text>
+        </View>
     ) : (
         <DataTable>
         <DataTable.Header>

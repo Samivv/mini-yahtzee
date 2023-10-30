@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, Vibration, View } from "react-native";
 import Header from "./Header";
 import Footer from "./Footer";
 import style from "../style/style";
@@ -7,6 +7,8 @@ import { NBR_OF_DICES, NBR_OF_THROWS,MAX_SPOT, MIN_SPOT, BONUS_POINTS_LIMIT, BON
 import { Container, Row, Col } from 'react-native-flex-grid';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 let board = []
 
@@ -59,6 +61,7 @@ export default Gameboard = ({ navigation, route}) => {
             selectedPoints[i] = true
             let nbrOfDices = diceSpots.reduce((total, x) => (x === (i+1) ? total + 1: total),0)
             points[i] = nbrOfDices * (i+1)
+            Vibration.vibrate(100)
 
         } else {
             setStatus("You already selected points for " + (i+1))
@@ -113,25 +116,28 @@ export default Gameboard = ({ navigation, route}) => {
         } catch(error) {
             console.log("Save error: " + error.message)
         }
-        setStatus("Points saved. Throw dices to start new game")
+        setStatus("Game over. Throw dices to start a new game")
     }
+
     const getScoreboardData = async() => {
         try {
             const jsonValue = await AsyncStorage.getItem(SCOREBOARD_KEY)
             if(jsonValue !== null) {
                 let tmpScores = JSON.parse(jsonValue)
                 setScores(tmpScores)
+            } else {
+                setScores([]) //Fixaus siihen, että vanhat pisteet palaavat clearauksen jälkeen kun pelaat pelin loppuun ennen kun olet sulkenut pelin.
             }
-        }   catch(error) {
+        } catch(error) {
             console.log("Read error: " + error.message)
         }
-    } 
-
+    }
     function getSpotTotal(i) {
         return dicePointsTotal[i]
     }
     const throwDices = () => {
         if (nbrOfThrowsLeft===0 && !gameEndStatus) {
+            Vibration.vibrate(500)
             setStatus("Select your points before the next throw")
             return 1
         } else if(nbrOfThrowsLeft === 0 && gameEndStatus) {
@@ -147,6 +153,7 @@ export default Gameboard = ({ navigation, route}) => {
                 spots[i] = randomNumber
             }
         }
+        Vibration.vibrate(100)
         setNbOfThrowsLeft(nbrOfThrowsLeft-1)
         setDiceSpots(spots)
         setStatus("Select and throw dices again")
@@ -157,6 +164,7 @@ export default Gameboard = ({ navigation, route}) => {
         if(nbrOfThrowsLeft < NBR_OF_THROWS && !gameEndStatus) {
             let dices = [...selectedDices]
             dices[i] = selectedDices[i] ? false : true
+            Vibration.vibrate(40)
             setSelectedDices(dices)
         } else {
             setStatus("You have to throw dices first.")
@@ -171,14 +179,18 @@ export default Gameboard = ({ navigation, route}) => {
         return selectedDicePoints[i] && !gameEndStatus ? "#5e5eee" : "#2B2B52"
     }
 
-    function restartGame() {
+    function restartGame(x) {
         setNbOfThrowsLeft(NBR_OF_THROWS)
         setDiceSpots(new Array(NBR_OF_DICES).fill(0))
         setSelectedDices(new Array(NBR_OF_DICES).fill(false))
         setSelectedDicePoints(new Array(MAX_SPOT).fill(false))
         setDicePointsTotal(new Array(MAX_SPOT).fill(0))
         setGameEndStatus(false)
+        if (x === "reset") {
+            setStatus("The game has been manually reset.")
+        } else {
         setStatus("Throw dices")
+        }
     }
 
 
@@ -188,7 +200,7 @@ export default Gameboard = ({ navigation, route}) => {
             setPlayerName(route.params.player)
         }
     }
-    ,[])
+    ,[navigation])
     
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -201,8 +213,12 @@ export default Gameboard = ({ navigation, route}) => {
 
     return(
         <>
+        <StatusBar style="light"/>
         <Header />
         <View style={style.container}>
+        <TouchableOpacity style={style.restartButton} onPress={() => Alert.alert("Info", "Long press the icon to restart game!")} onLongPress={() => {restartGame("reset"); Vibration.vibrate(500)}}>
+            <MaterialCommunityIcons name="restart" size={30} color="#2B2B52" />
+        </TouchableOpacity>
         <View style={style.iconContainer}>
         <MaterialCommunityIcons name="dice-multiple" size={150} color="#2B2B52"/>
         </View>
@@ -215,8 +231,13 @@ export default Gameboard = ({ navigation, route}) => {
         <Text style={style.throwsText}>
             {pointsVar >= 63 ? "BONUS UNLOCKED!" : `You still need ${BONUS_POINTS_LIMIT - pointsVar} points for bonus.`} </Text>
         <Text style={style.throwsText}>Throws left: <Text style={{color: nbrOfThrowsLeft === 0 ? "red" : "black"}}>{nbrOfThrowsLeft}</Text></Text>
-        <Text style={style.statusText}>{status}</Text>
-        <Container fluid>
+        <View style={style.statusBox}>
+        <Text style={style.statusLabel}>Status:</Text>
+        <Text style={[style.statusText, { color: status == "Select and throw dices again" || status == "Throw dices" || status=="Game over. Throw dices to start a new game" ? "green" : "red" }]}>
+            {status}
+        </Text>
+        </View>
+        <Container style={style.dicesContainer}>
             <Row>{dicesRow}</Row>
         </Container>
         <Container fluid>
@@ -230,14 +251,11 @@ export default Gameboard = ({ navigation, route}) => {
             <MaterialCommunityIcons name="dice-multiple" size={24} color="#F5F5F5" />
             <Text style={style.buttonText}>THROW</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={style.button} onPress={() => savePlayerPoints()}>
-            <MaterialCommunityIcons name="content-save" size={24} color="#F5F5F5" />
-            <Text style={style.buttonText}>SAVE</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={style.button} onPress={() => restartGame()}>
+
+        {/* <TouchableOpacity style={style.button} onPress={() => restartGame()}>
             <MaterialCommunityIcons name="restart" size={24} color="#F5F5F5" />
             <Text style={style.buttonText}>RESTART</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         </View>
         </View>
         <Footer />
