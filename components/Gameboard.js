@@ -17,6 +17,7 @@ export default Gameboard = ({ navigation, route}) => {
     const [nbrOfThrowsLeft, setNbOfThrowsLeft] = useState(NBR_OF_THROWS)
     const [status, setStatus] = useState('Throw dices')
     const [gameEndStatus, setGameEndStatus] = useState(false)
+    const [pointsVar, setPointsVar] = useState(0)
     // Ovatko nopat  kiinnitetty
     const [selectedDices, setSelectedDices] = useState(new Array(NBR_OF_DICES).fill(false))
     // Noppien silmäluvut
@@ -58,9 +59,6 @@ export default Gameboard = ({ navigation, route}) => {
             selectedPoints[i] = true
             let nbrOfDices = diceSpots.reduce((total, x) => (x === (i+1) ? total + 1: total),0)
             points[i] = nbrOfDices * (i+1)
-            if(points[i] >= BONUS_POINTS_LIMIT) {
-                points[i] += BONUS_POINTS
-            }
 
         } else {
             setStatus("You already selected points for " + (i+1))
@@ -68,17 +66,36 @@ export default Gameboard = ({ navigation, route}) => {
         }
         setDicePointsTotal(points)
         setSelectedDicePoints(selectedPoints)
+        setNbOfThrowsLeft(NBR_OF_THROWS)
+        selectedDices.fill(false)
         return points[i]
     } 
     else {
         setStatus('Throw ' + NBR_OF_THROWS + ' times before setting points')
     }
 }
+
+    useEffect(() => {
+        setPointsVar(dicePointsTotal.reduce((total, x) => total + x, 0))
+        let allPointsSelected = selectedDicePoints.every((point) => point === true)
+        if (allPointsSelected) {
+        savePlayerPoints()
+        setGameEndStatus(false)
+        setDiceSpots(new Array(NBR_OF_DICES).fill(0))
+        setDicePointsTotal(new Array(MAX_SPOT).fill(0))
+        setSelectedDicePoints(new Array(MAX_SPOT).fill(false))
+        setNbOfThrowsLeft(NBR_OF_THROWS)
+        }
+    }, [selectedDicePoints])
+
     const savePlayerPoints = async() => {
         let points = dicePointsTotal.reduce((total, x) => total + x, 0)
         if(points == 0) {
             setStatus("You have to select points first")
             return 1
+        }
+        if(points >= BONUS_POINTS_LIMIT) {
+            points += BONUS_POINTS
         }
         const timeDate = new Date()
         const newKey = scores.length + 1
@@ -96,7 +113,7 @@ export default Gameboard = ({ navigation, route}) => {
         } catch(error) {
             console.log("Save error: " + error.message)
         }
-        setStatus("Points saved")
+        setStatus("Points saved. Throw dices to start new game")
     }
     const getScoreboardData = async() => {
         try {
@@ -187,15 +204,16 @@ export default Gameboard = ({ navigation, route}) => {
         <Header />
         <View style={style.container}>
         <View style={style.iconContainer}>
-        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
-        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
-        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
-        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
-        <MaterialCommunityIcons name="dice-6" size={50} color="#2B2B52" style={style.icon} />
+        <MaterialCommunityIcons name="dice-multiple" size={150} color="#2B2B52"/>
         </View>
         <Text style={style.playerNameText}>
             Good luck, <Text style={style.highlight}>{playerName}</Text>
         </Text>
+        {
+        <Text style={style.throwsText}>Current points out of bonus {pointsVar}/{BONUS_POINTS_LIMIT}</Text>
+        }
+        <Text style={style.throwsText}>
+            {pointsVar >= 63 ? "BONUS UNLOCKED!" : `You still need ${BONUS_POINTS_LIMIT - pointsVar} points for bonus.`} </Text>
         <Text style={style.throwsText}>Throws left: <Text style={{color: nbrOfThrowsLeft === 0 ? "red" : "black"}}>{nbrOfThrowsLeft}</Text></Text>
         <Text style={style.statusText}>{status}</Text>
         <Container fluid>
