@@ -38,6 +38,16 @@ export default Gameboard = ({ navigation, route}) => {
         )
     }
 
+    // when the game is started for the first time, the dicesrow should have a dice from 1 to 6.
+    useEffect(() => {
+        if(board.length === 0) {
+            for(let i=0;i<NBR_OF_DICES;i++) {
+                board.push(`dice-${i+1}`)
+            }
+        }
+    }
+    ,[])
+
 
     const pointsRow = []
     for (let spot=0;spot < MAX_SPOT;spot++) {
@@ -216,7 +226,13 @@ export default Gameboard = ({ navigation, route}) => {
         <StatusBar style="light"/>
         <Header />
         <View style={style.container}>
-        <TouchableOpacity style={style.restartButton} onPress={() => Alert.alert("Info", "Long press the icon to restart game!")} onLongPress={() => {restartGame("reset"); Vibration.vibrate(500)}}>
+        <View style={style.statusBox}>
+            <Text style={style.statusLabel}>Status:</Text>
+            <Text style={[style.statusText, { color: status == "Select and throw dices again" || status == "Throw dices" || status=="Game over. Throw dices to start a new game" ? "green" : "red" }]}>
+            {status}
+        </Text>
+        </View>
+        <TouchableOpacity  onPress={() => Alert.alert("Info", "Long press the icon to restart game!")} onLongPress={() => {restartGame("reset"); Vibration.vibrate(500)}}>
             <MaterialCommunityIcons name="restart" size={30} color="#2B2B52" />
         </TouchableOpacity>
         <View style={style.iconContainer}>
@@ -225,19 +241,17 @@ export default Gameboard = ({ navigation, route}) => {
         <Text style={style.playerNameText}>
             Good luck, <Text style={style.highlight}>{playerName}</Text>
         </Text>
-        {
-        <Text style={style.throwsText}>Current points out of bonus {pointsVar}/{BONUS_POINTS_LIMIT}</Text>
-        }
+        {/* <View style={style.statusBox}>
+        <Text style={style.throwsText}>Current points: {pointsVar}</Text>
+        </View> */}
+        {/* <View style={style.statusBox}>
         <Text style={style.throwsText}>
             {pointsVar >= 63 ? "BONUS UNLOCKED!" : `You still need ${BONUS_POINTS_LIMIT - pointsVar} points for bonus.`} </Text>
+        </View> */}
+        {/* <View style={style.statusBox}>
         <Text style={style.throwsText}>Throws left: <Text style={{color: nbrOfThrowsLeft === 0 ? "red" : "black"}}>{nbrOfThrowsLeft}</Text></Text>
-        <View style={style.statusBox}>
-        <Text style={style.statusLabel}>Status:</Text>
-        <Text style={[style.statusText, { color: status == "Select and throw dices again" || status == "Throw dices" || status=="Game over. Throw dices to start a new game" ? "green" : "red" }]}>
-            {status}
-        </Text>
-        </View>
-        <Container style={style.dicesContainer}>
+        </View> */}
+        <Container fluid>
             <Row>{dicesRow}</Row>
         </Container>
         <Container fluid>
@@ -246,17 +260,34 @@ export default Gameboard = ({ navigation, route}) => {
         <Container fluid>
             <Row>{pointsToSelectRow}</Row>
         </Container>
-        <View style={style.buttonContainer}>
-        <TouchableOpacity style={style.button} onPress={() => throwDices()}>
+        {/* <View style={style.buttonLeft}>
             <MaterialCommunityIcons name="dice-multiple" size={24} color="#F5F5F5" />
+            <Text style={style.buttonText}>{nbrOfThrowsLeft}</Text>
+        </View>
+        <View style={style.buttonRight}>
+            <Text style={style.buttonText}>{pointsVar} </Text>
+            <MaterialCommunityIcons name="sack" size={24} color="#F5F5F5" />
+        </View> */}
+        <View style={style.button}>
+            <View style={style.button}>
+            <MaterialCommunityIcons name="dice-multiple" size={24} color="#F5F5F5" />
+            <Text style={style.buttonText}>{nbrOfThrowsLeft}</Text>
+            </View>
+            <View style={style.button}>
+            <TouchableOpacity style={style.button} onPress={() => throwDices()}>
+            <MaterialCommunityIcons name="handball" size={24} color="#F5F5F5" />
             <Text style={style.buttonText}>THROW</Text>
-        </TouchableOpacity>
-
+            </TouchableOpacity>
+            </View>
+            <View style={style.button}>
+            <Text style={style.buttonText}>{pointsVar} </Text>
+            <MaterialCommunityIcons name="sack" size={24} color="#F5F5F5" />
+            </View>
+            </View>
         {/* <TouchableOpacity style={style.button} onPress={() => restartGame()}>
             <MaterialCommunityIcons name="restart" size={24} color="#F5F5F5" />
             <Text style={style.buttonText}>RESTART</Text>
         </TouchableOpacity> */}
-        </View>
         </View>
         <Footer />
         </>

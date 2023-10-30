@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { TextInput, Text, View, Pressable, Keyboard, TouchableHighlight, Alert, TouchableOpacity, Vibration } from "react-native"
+import { TextInput, Text, View, Keyboard, TouchableHighlight, Alert, TouchableOpacity, Vibration } from "react-native"
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Header from './Header'
 import Footer from './Footer'
@@ -26,7 +26,6 @@ export default Home = ({ navigation }) => {
         setHasPlayerName(false)
         setPlayerName('')
     }
-
 
 
     return (
@@ -59,11 +58,11 @@ export default Home = ({ navigation }) => {
                 for the dices you selected. Only the dices having
                 the same spot count are calculated. Inside the
                 game you can not select same points from
-                {MIN_SPOT} to {MAX_SPOT} again.
+                {" "+MIN_SPOT} to {MAX_SPOT} again.
                 </Text>
                 <Text multiline="true"><Text style={style.highlight}>GOAL:</Text> To get points as much as possible.
-                {BONUS_POINTS_LIMIT} points is the limit of
-                getting bonus which gives you {BONUS_POINTS}
+                {" "+BONUS_POINTS_LIMIT} points is the limit of
+                getting bonus which gives you {BONUS_POINTS+" "}
                 points more.</Text>
                 <Text style={style.highlight}> Name chosen: {playerName}</Text>
                 <TouchableOpacity onPress={() => {navigation.navigate('Gameboard',{player:playerName}); Vibration.vibrate(50);}}><Text style={style.playButton}>PLAY</Text></TouchableOpacity>
