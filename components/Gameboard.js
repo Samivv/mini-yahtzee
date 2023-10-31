@@ -93,17 +93,19 @@ export default Gameboard = ({ navigation, route}) => {
     }
 }
 
+
     useEffect(() => {
         setPointsVar(dicePointsTotal.reduce((total, x) => total + x, 0))
         let allPointsSelected = selectedDicePoints.every((point) => point === true)
         if (allPointsSelected) {
-        savePlayerPoints()
-        setGameEndStatus(false)
-        setDiceSpots(new Array(NBR_OF_DICES).fill(0))
-        setDicePointsTotal(new Array(MAX_SPOT).fill(0))
-        setSelectedDicePoints(new Array(MAX_SPOT).fill(false))
-        setNbOfThrowsLeft(NBR_OF_THROWS)
+            savePlayerPoints()
         }
+        // savePlayerPoints()
+        // setGameEndStatus(false)
+        // setDiceSpots(new Array(NBR_OF_DICES).fill(0))
+        // setDicePointsTotal(new Array(MAX_SPOT).fill(0))
+        // setSelectedDicePoints(new Array(MAX_SPOT).fill(false))
+        // setNbOfThrowsLeft(NBR_OF_THROWS)
     }, [selectedDicePoints])
 
     const savePlayerPoints = async() => {
@@ -114,6 +116,8 @@ export default Gameboard = ({ navigation, route}) => {
         }
         if(points >= BONUS_POINTS_LIMIT) {
             points += BONUS_POINTS
+            Alert.alert("CONGRATULATIONS!", `BONUS POINTS GRANTED, \nTOTALING ${points}`)
+            setPointsVar(points)
         }
         const timeDate = new Date()
         const newKey = scores.length + 1
@@ -131,7 +135,7 @@ export default Gameboard = ({ navigation, route}) => {
         } catch(error) {
             console.log("Save error: " + error.message)
         }
-        setStatus("Game over. Go again?")
+        setStatus("Points saved. Go again?")
     }
 
     const getScoreboardData = async() => {
@@ -172,6 +176,15 @@ export default Gameboard = ({ navigation, route}) => {
         setNbOfThrowsLeft(nbrOfThrowsLeft-1)
         setDiceSpots(spots)
         setStatus("Select and throw dices again")
+        setPointsVar(dicePointsTotal.reduce((total, x) => total + x, 0))
+        let allPointsSelected = selectedDicePoints.every((point) => point === true)
+        if (allPointsSelected) {
+            setGameEndStatus(false)
+            setDiceSpots(new Array(NBR_OF_DICES).fill(0))
+            setDicePointsTotal(new Array(MAX_SPOT).fill(0))
+            setSelectedDicePoints(new Array(MAX_SPOT).fill(false))
+            setNbOfThrowsLeft(NBR_OF_THROWS)
+        }
     }
 
 
@@ -207,15 +220,6 @@ export default Gameboard = ({ navigation, route}) => {
         setStatus("Throw dices")
         }
     }
-
-
-
-    useEffect(() => {
-        if(playerName === '' && route.params?.player) {
-            setPlayerName(route.params.player)
-        }
-    }
-    ,[navigation])
     
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -233,7 +237,7 @@ export default Gameboard = ({ navigation, route}) => {
         <View style={style.container}>
         <View style={style.statusBox}>
             <Text style={style.statusLabel}>Status:</Text>
-            <Text style={[style.statusText, { color: status == "Select and throw dices again" || status == "Throw dices" || status=="Game over. Go again?" ? "green" : "red" }]}>
+            <Text style={[style.statusText, { color: status == "Select and throw dices again" || status == "Throw dices" || status=="Points saved. Go again?" ? "green" : "red" }]}>
             {status}
         </Text>
         </View>
