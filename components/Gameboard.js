@@ -1,20 +1,21 @@
 import { Text, TouchableOpacity, Vibration, View } from "react-native";
 import Header from "./Header";
 import style from "../style/style";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NBR_OF_DICES, NBR_OF_THROWS,MAX_SPOT, MIN_SPOT, BONUS_POINTS_LIMIT, BONUS_POINTS, SCOREBOARD_KEY } from "../constants/Game";
 import { Container, Row, Col } from 'react-native-flex-grid';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { PlayerNameContext } from "./PlayerNameContext";
 
 let board = []
 
 
 export default Gameboard = ({ navigation, route}) => {
     
-    const [playerName, setPlayerName] = useState('')
+    const [playerName, setPlayerName] = useContext(PlayerNameContext)
     const [nbrOfThrowsLeft, setNbOfThrowsLeft] = useState(NBR_OF_THROWS)
     const [status, setStatus] = useState('Throw dices')
     const [gameEndStatus, setGameEndStatus] = useState(false)
@@ -245,9 +246,9 @@ export default Gameboard = ({ navigation, route}) => {
         <MaterialCommunityIcons name="dice-multiple" size={150} color="#2B2B52"/>
         </View>
         <Container fluid>
-            <Row style={{borderBottomWidth: nbrOfThrowsLeft > 0 ? 5 : 0, borderColor: '#2B2B52', borderRadius: 25}}>{dicesRow}</Row>
+            <Row style={{borderBottomWidth: 5, borderColor: nbrOfThrowsLeft == 0 ? '#5e5eee' : "#F5F5F5", borderRadius: 25}}>{pointsToSelectRow}</Row>
             <Row style={{padding: 50}}>{pointsRow}</Row>
-            <Row style={{borderBottomWidth: nbrOfThrowsLeft == 0 ? 5 : 0, borderColor: '#2B2B52', borderRadius: 25}}>{pointsToSelectRow}</Row>
+            <Row style={{borderBottomWidth: 5, borderColor: nbrOfThrowsLeft == 0 ? "#F5F5F5" : '#5e5eee', borderRadius: 25}}>{dicesRow}</Row>
         </Container>
         <View style={style.button}>
             <View style={[style.button, style.borders]}>

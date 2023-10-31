@@ -4,12 +4,15 @@ import Scoreboard from './components/Scoreboard'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { PlayerNameProvider } from './components/PlayerNameContext';
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   
   
   return (
+    <PlayerNameProvider>
     <NavigationContainer>
     <Tab.Navigator
       //initialRouteName="Feed"
@@ -36,5 +39,6 @@ export default function App() {
       
     </Tab.Navigator>
     </NavigationContainer>
+    </PlayerNameProvider>
   );
 }

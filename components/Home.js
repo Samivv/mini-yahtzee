@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { TextInput, Text, View, Keyboard, TouchableHighlight, Alert, TouchableOpacity, Vibration } from "react-native"
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Header from './Header'
@@ -6,21 +6,23 @@ import Footer from './Footer'
 import { NBR_OF_DICES, NBR_OF_THROWS,MAX_SPOT, MIN_SPOT, BONUS_POINTS_LIMIT, BONUS_POINTS } from "../constants/Game";
 import style from "../style/style";
 import { StatusBar } from "expo-status-bar";
+import { PlayerNameContext } from "./PlayerNameContext";
 
 export default Home = ({ navigation }) => {
 
-    const [playerName, setPlayerName] = useState('')
+    const [playerName, setPlayerName] = useContext(PlayerNameContext)
     const [hasPlayerName, setHasPlayerName] = useState(false)
 
     const handlePlayerName = (value) => {
-        if(value.trim().length > 0 ) {
-            setHasPlayerName(true)
-            Vibration.vibrate(200)
-            Keyboard.dismiss()
+        const trimmedValue = value.trim();
+        if (trimmedValue.length > 2 && trimmedValue.length <= 20 && /^[a-zA-Z\s]*$/.test(trimmedValue)) {
+          setHasPlayerName(true);
+          Vibration.vibrate(200);
+          Keyboard.dismiss();
         } else {
-            Alert.alert('Please enter your name', 'Name is required', [{text: 'OK'}])
+          Alert.alert('Invalid name', 'Name must be 3-20 characters long and contain only letters and spaces', [{text: 'OK'}]);
         }
-    }
+      };
 
     const handleNewName = () => {
         setHasPlayerName(false)
@@ -69,7 +71,7 @@ export default Home = ({ navigation }) => {
                 getting bonus which gives you {BONUS_POINTS+" "}
                 points more.</Text>
                 <Text style={style.highlight}>Name chosen: {playerName}</Text>
-                <TouchableOpacity onPress={() => {navigation.navigate('Gameboard',{player:playerName}); Vibration.vibrate(50);}}><Text style={style.playButton}>PLAY</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {navigation.navigate('Gameboard'); Vibration.vibrate(50);}}><Text style={style.playButton}>PLAY</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => {handleNewName(); Vibration.vibrate(50);}}><Text style={style.playButton2}>Change name</Text></TouchableOpacity>
                 </View>
                 </>
