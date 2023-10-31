@@ -10,8 +10,9 @@ export default StyleSheet.create({
   header: {
     marginTop: 0,
     paddingTop: 25,
+    paddingBottom:15,
     backgroundColor: '#2B2B52',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   footer: {
     marginTop: 'auto',
@@ -279,7 +280,7 @@ export default StyleSheet.create({
   throwButton: {
     marginTop: 20,
     marginBottom: 20,
-    height:150
+    height:100
   },
   noAdjust: {
     maxWidth:90,
@@ -289,6 +290,12 @@ export default StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
     margin: 10,
+  }, gameboardLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginVertical: 10,
   },
 
 });

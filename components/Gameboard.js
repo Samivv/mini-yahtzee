@@ -66,6 +66,7 @@ export default Gameboard = ({ navigation, route}) => {
             <Col key={"buttonsRow"+diceButton}><TouchableOpacity key={"buttonsRow" + diceButton} onPress={() => selectDicePoints(diceButton)} ><MaterialCommunityIcons name={"numeric-"+(diceButton+1)+"-circle"} color={getDicePointsColor(diceButton)} size={35} key={"buttonsRow"+diceButton}/></TouchableOpacity></Col>
         )
     } 
+
                                           
     const selectDicePoints = (i) => {
         if(nbrOfThrowsLeft === 0) {
@@ -236,24 +237,23 @@ export default Gameboard = ({ navigation, route}) => {
             {status}
         </Text>
         </View>
-        <Text style={style.playerNameText}>
-            Good luck, <Text style={style.highlight}>{playerName}</Text>
-        </Text>
         <TouchableOpacity style={style.restartContainer} onPress={() => Alert.alert("Info", "Long press the icon to restart game!")} onLongPress={() => {restartGame("reset"); Vibration.vibrate(500)}}>
             <Text>Restart<MaterialCommunityIcons name="restart" size={30} color="#2B2B52" /></Text>
         </TouchableOpacity>
         <View style={style.iconContainer}>
-        <MaterialCommunityIcons name="dice-multiple" size={150} color="#2B2B52"/>
         </View>
         <Container fluid>
+            <Row><Text style={style.gameboardLabel}>Dice points:</Text></Row>
+            <TouchableOpacity onPress={() => Alert.alert("Info",`The scores for each dice are shown here from ${MIN_SPOT} to ${MAX_SPOT}`)}><Row style={{padding: 50}}>{pointsRow}</Row></TouchableOpacity>
+            <Row><Text style={style.gameboardLabel}>Select which dice you want points for:</Text></Row>
             <Row style={{borderBottomWidth: 5, borderColor: nbrOfThrowsLeft == 0 ? '#5e5eee' : "#F5F5F5", borderRadius: 25}}>{pointsToSelectRow}</Row>
-            <TouchableOpacity onPress={() => alert(`The scores for each dice are shown here from ${MIN_SPOT} to ${MAX_SPOT}`)}><Row style={{padding: 50}}>{pointsRow}</Row></TouchableOpacity>
+            <Row><Text style={style.gameboardLabel}>Select dices:</Text></Row>
             <Row style={{borderBottomWidth: 5, borderColor: nbrOfThrowsLeft == 0 ? "#F5F5F5" : '#5e5eee', borderRadius: 25}}>{dicesRow}</Row>
         </Container>
         <View style={style.button}>
             <View style={[style.button, style.borders]}>
                 <MaterialCommunityIcons name="dice-multiple" size={26} color="#F5F5F5" />
-                <Text style={style.buttonText}>{nbrOfThrowsLeft}</Text>
+                <TouchableOpacity onPress={() => {Alert.alert("Info", "The amount of throws you have left.")}}><Text style={style.buttonText}>{nbrOfThrowsLeft}</Text></TouchableOpacity>
             </View>
             <View style={style.button}>
                 <TouchableOpacity style={[style.button, style.borders, style.throwButton]} onPress={() => throwDices()}>
@@ -263,8 +263,13 @@ export default Gameboard = ({ navigation, route}) => {
             </View>
             <View style={[style.button, style.borders, style.noAdjust]}>
                 <Text style={style.buttonText}>{pointsVar} </Text>
+                <TouchableOpacity onPress={() => {Alert.alert("Info", "The amount of points you have gathered.")}}>
                 <MaterialCommunityIcons name="clipboard" size={26} color="#F5F5F5" />
+                </TouchableOpacity>
             </View>
+            </View>
+            <View style={style.footer}>
+             <Text style={[style.author]}>Good luck, {playerName}!</Text>
             </View>
         </View>
         </>
