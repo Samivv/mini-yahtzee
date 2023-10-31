@@ -93,7 +93,6 @@ export default Scoreboard = ({navigation}) => {
         </TouchableOpacity>
     </View>
     )}
-    <Footer />
         </>
     )
 }

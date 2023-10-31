@@ -45,7 +45,9 @@ export default Home = ({ navigation }) => {
                 :
                 <>
                 <Text style={style.highlightCentered}>The rules:</Text>
-                <Text multiline="true"><Text style={style.highlight}>THE GAME:</Text> Upper section of the classic Yahtzee
+                <View style={style.rules}>
+                <Text style={style.highlight}>THE GAME:</Text>
+                <Text multiline="true">Upper section of the classic Yahtzee
                 dice game. You have {NBR_OF_DICES} dices and
                 for the every dice you have {NBR_OF_THROWS+" "}
                 throws. After each throw you can keep dices in
@@ -54,19 +56,22 @@ export default Home = ({ navigation }) => {
                 your points from {MIN_SPOT} to {MAX_SPOT}.
                 Game ends when all points have been selected.
                 The order for selecting those is free.</Text>
-                <Text multiline="true"><Text style={style.highlight}>POINTS:</Text> After each turn game calculates the sum
+                <Text style={style.highlight}>POINTS:</Text>
+                <Text multiline="true">After each turn game calculates the sum
                 for the dices you selected. Only the dices having
                 the same spot count are calculated. Inside the
                 game you can not select same points from
                 {" "+MIN_SPOT} to {MAX_SPOT} again.
                 </Text>
-                <Text multiline="true"><Text style={style.highlight}>GOAL:</Text> To get points as much as possible.
+                <Text style={style.highlight}>GOAL:</Text>
+                <Text multiline="true">To get points as much as possible.
                 {" "+BONUS_POINTS_LIMIT} points is the limit of
                 getting bonus which gives you {BONUS_POINTS+" "}
                 points more.</Text>
-                <Text style={style.highlight}> Name chosen: {playerName}</Text>
+                <Text style={style.highlight}>Name chosen: {playerName}</Text>
                 <TouchableOpacity onPress={() => {navigation.navigate('Gameboard',{player:playerName}); Vibration.vibrate(50);}}><Text style={style.playButton}>PLAY</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => {handleNewName(); Vibration.vibrate(50);}}><Text style={style.playButton2}>Change name</Text></TouchableOpacity>
+                </View>
                 </>
                 }
             </View>

@@ -22,7 +22,7 @@ export default StyleSheet.create({
     color: '#F5F5F5',
     fontWeight: 'bold',
     flex: 1,
-    fontSize: 23,
+    fontSize: 26,
     textAlign: 'center',
     margin: 10,
   },
@@ -64,10 +64,9 @@ export default StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#2B2B52',
     padding: 10,
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 5,
     borderRadius: 5,
     marginHorizontal: 5,
   },
@@ -101,9 +100,7 @@ export default StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
-    // backgroundColor: '#2B2B52',
     padding: 10,
-    // borderRadius: 5,
   },
   buttonText: {
     color:"#F5F5F5",
@@ -119,7 +116,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     backgroundColor: '#2B2B52',
     padding: 10,
-    borderRadius: 5,
   },
   playButton2: {
     marginTop:10,
@@ -129,7 +125,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     backgroundColor: '#2B2B52',
     padding: 10,
-    borderRadius: 5,
   },
   icon: {
     marginTop: 15,
@@ -257,7 +252,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#2B2B52',
-    // backgroundColor: 'lightgray',
     borderTopWidth: 1,
     borderBottomWidth: 1,
     padding: 20,
@@ -266,10 +260,35 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     marginRight: 5,
-    color: 'white'
+    color: 'white',
+    flex: 1
   },
   statusText: {
     fontWeight: 'bold',
+    flex:4
+  },
+  restartContainer: {
+    position: 'absolute',
+    top: 68,
+    right:0,
+  },
+  borders: {
+    borderWidth:1,
+    backgroundColor: '#2B2B52',
+  },
+  throwButton: {
+    marginTop: 20,
+    marginBottom: 20,
+    height:150
+  },
+  noAdjust: {
+    maxWidth:90,
+    justifyContent: 'center'
+  },
+  rules: {
+    padding: 20,
+    backgroundColor: '#fff',
+    margin: 10,
   },
 
 });
