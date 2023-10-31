@@ -258,7 +258,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#2B2B52',
     // backgroundColor: 'lightgray',
-    padding: 25,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    padding: 20,
   },
   statusLabel: {
     fontWeight: 'bold',
