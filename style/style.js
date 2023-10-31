@@ -110,7 +110,8 @@ export default StyleSheet.create({
     marginLeft: 10,
   },
   playButton: {
-    marginTop:50,
+    marginTop:7,
+    borderRadius: 5,
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
@@ -119,7 +120,9 @@ export default StyleSheet.create({
     padding: 10,
   },
   playButton2: {
-    marginTop:10,
+    marginTop:5,
+    borderRadius: 5,
+    marginBottom: 'auto',
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
@@ -259,7 +262,7 @@ export default StyleSheet.create({
   },
   statusLabel: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 15,
     marginRight: 5,
     color: 'white',
     flex: 1

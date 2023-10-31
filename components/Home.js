@@ -71,7 +71,8 @@ export default Home = ({ navigation }) => {
                 getting bonus which gives you {BONUS_POINTS+" "}
                 points more.</Text>
                 <Text style={style.highlight}>Name chosen: {playerName}</Text>
-                <TouchableOpacity onPress={() => {navigation.navigate('Gameboard'); Vibration.vibrate(50);}}><Text style={style.playButton}>PLAY</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {navigation.navigate('Gameboard'); Vibration.vibrate(50);}}><Text style={style.playButton}>PLAY</Text></TouchableOpacity> 
+                {/* // PEKALLE TIEDOKSI, ETTÄ TUOSSA                            ^  OLI KYLLÄ PROPSIT PELAAJANIMEÄ VARTEN, (OLI TEHTÄVÄNANNOSSA) MUTTA KÄYTÄN REACTIN CONTEXTPROVIDERIA SEN SIJAAN, ETTÄ NIMENVAIHTO TOIMII */}
                 <TouchableOpacity onPress={() => {handleNewName(); Vibration.vibrate(50);}}><Text style={style.playButton2}>Change name</Text></TouchableOpacity>
                 </View>
                 </>
