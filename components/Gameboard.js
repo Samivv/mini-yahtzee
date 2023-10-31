@@ -247,7 +247,7 @@ export default Gameboard = ({ navigation, route}) => {
         </View>
         <Container fluid>
             <Row style={{borderBottomWidth: 5, borderColor: nbrOfThrowsLeft == 0 ? '#5e5eee' : "#F5F5F5", borderRadius: 25}}>{pointsToSelectRow}</Row>
-            <Row style={{padding: 50}}>{pointsRow}</Row>
+            <TouchableOpacity onPress={() => alert(`The scores for each dice are shown here from ${MIN_SPOT} to ${MAX_SPOT}`)}><Row style={{padding: 50}}>{pointsRow}</Row></TouchableOpacity>
             <Row style={{borderBottomWidth: 5, borderColor: nbrOfThrowsLeft == 0 ? "#F5F5F5" : '#5e5eee', borderRadius: 25}}>{dicesRow}</Row>
         </Container>
         <View style={style.button}>
