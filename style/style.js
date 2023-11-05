@@ -110,7 +110,7 @@ export default StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginLeft: 10,
-    fontFamily: 'KanitBig'
+    fontFamily: 'Kanit'
   },
   playButton: {
     marginTop:7,
@@ -313,7 +313,7 @@ export default StyleSheet.create({
   playButtonContainer: {
     marginTop: 20,
     marginBottom: 20,
-    borderTopWidth: 1
+    borderTopWidth: 2
   },
 
 });

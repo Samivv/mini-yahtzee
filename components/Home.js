@@ -37,6 +37,7 @@ export default Home = ({ navigation }) => {
             <View style={style.container}>
                 {!hasPlayerName?
                 <>
+                <MaterialCommunityIcons name="account-circle" size={100} color="#000" style={style.diceIcon}/>
                 <Text style={[style.infoText,style.rulesText]}>Enter your name for the scoreboard...</Text>
                 <TextInput style={style.input} onChangeText={setPlayerName} autoFocus={true}/>
                 <TouchableHighlight style={style.okButton} onPress={() => {handlePlayerName(playerName)}}>
