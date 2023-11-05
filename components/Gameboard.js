@@ -209,6 +209,7 @@ export default Gameboard = ({ navigation, route}) => {
 
     function restartGame(x) {
         setNbOfThrowsLeft(NBR_OF_THROWS)
+        setPointsVar(0)
         setDiceSpots(new Array(NBR_OF_DICES).fill(0))
         setSelectedDices(new Array(NBR_OF_DICES).fill(false))
         setSelectedDicePoints(new Array(MAX_SPOT).fill(false))
