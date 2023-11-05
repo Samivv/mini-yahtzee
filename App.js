@@ -5,12 +5,23 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { PlayerNameProvider } from './components/PlayerNameContext';
+import {useFonts} from 'expo-font';
+
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   
-  
+  const [loaded] = useFonts({
+    Kanit: require('./assets/fonts/Kanit-Regular.ttf'),
+    KanitBig: require('./assets/fonts/Kanit-Black.ttf'),
+    Header: require('./assets/fonts/Kanit-Thin.ttf'),
+  });
+
+  if(!loaded) {
+    return null
+  }
+
   return (
     <PlayerNameProvider>
     <NavigationContainer>

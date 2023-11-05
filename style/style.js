@@ -12,7 +12,7 @@ export default StyleSheet.create({
     paddingTop: 25,
     paddingBottom:15,
     backgroundColor: '#2B2B52',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   footer: {
     marginTop: 'auto',
@@ -21,9 +21,10 @@ export default StyleSheet.create({
   },
   title: {
     color: '#F5F5F5',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Header',
     flex: 1,
-    fontSize: 26,
+    fontSize: 35,
     textAlign: 'center',
     margin: 10,
   },
@@ -108,6 +109,7 @@ export default StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginLeft: 10,
+    fontFamily: 'KanitBig'
   },
   playButton: {
     marginTop:7,
@@ -143,6 +145,7 @@ export default StyleSheet.create({
   input: {
     height: 40,
     width: '80%',
+    fontFamily: 'Kanit',
     borderColor: '#2B2B52',
     alignSelf: 'center',
     borderWidth: 1,
@@ -159,12 +162,14 @@ export default StyleSheet.create({
   okButtonText: {
     color: '#F5F5F5',
     textAlign: 'center',
+    fontFamily: 'Kanit',
+    fontWeight: 'bold'
   },
   highlight: {
-    fontWeight: 'bold',
+    fontFamily: 'KanitBig',
   },
   highlightCentered: {
-    fontWeight: 'bold',
+    fontFamily: 'KanitBig',
     textAlign: 'center',
     fontSize: 25,
     borderBottomWidth: 2,
@@ -262,6 +267,7 @@ export default StyleSheet.create({
   },
   statusLabel: {
     fontWeight: 'bold',
+    fontFamily: 'Header',
     fontSize: 15,
     marginRight: 5,
     color: 'white',
@@ -295,10 +301,14 @@ export default StyleSheet.create({
     margin: 10,
   }, gameboardLabel: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Kanit',
     color: '#333',
     textAlign: 'center',
     marginVertical: 10,
   },
+  rulesText: {
+    fontFamily: 'Kanit',
+
+  }
 
 });
