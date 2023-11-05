@@ -37,7 +37,8 @@ export default StyleSheet.create({
     margin: 10,
   },
   gameboard: {
-    backgroundColor: '#F5F5F5',
+    // backgroundColor: '#F5F5F5',
+    backgroundColor: '#AEDFF7',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -133,8 +134,6 @@ export default StyleSheet.create({
     padding: 10,
   },
   icon: {
-    marginTop: 15,
-    marginBottom: 20,
     alignSelf: 'center'
   },
   infoText: {
@@ -299,6 +298,8 @@ export default StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
     margin: 10,
+    width: "100%",
+    height: "100%"
   }, gameboardLabel: {
     fontSize: 18,
     fontFamily: 'Kanit',
@@ -308,7 +309,11 @@ export default StyleSheet.create({
   },
   rulesText: {
     fontFamily: 'Kanit',
-
-  }
+  },
+  playButtonContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+    borderTopWidth: 1
+  },
 
 });

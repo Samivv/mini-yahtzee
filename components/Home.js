@@ -34,8 +34,7 @@ export default Home = ({ navigation }) => {
         <>
         <Header/>
                 <StatusBar style="light"/>
-            <View>
-                <MaterialCommunityIcons style={style.icon} color="#2B2B52" name="information" size={90}/>
+            <View style={style.container}>
                 {!hasPlayerName?
                 <>
                 <Text style={[style.infoText,style.rulesText]}>Enter your name for the scoreboard...</Text>
@@ -46,9 +45,9 @@ export default Home = ({ navigation }) => {
                 </>
                 :
                 <>
-                <Text style={style.highlightCentered}>The rules:</Text>
                 <View style={style.rules}>
-                <Text style={style.highlight}>THE GAME:</Text>
+                <Text style={style.highlightCentered}><MaterialCommunityIcons name="book-open-page-variant" size={24} color="#000" />The rules:</Text>
+                <Text style={style.highlight}><MaterialCommunityIcons name="dice-multiple" size={24} color="#000" />THE GAME:</Text>
                 <Text multiline="true" style={style.rulesText}>Upper section of the classic Yahtzee
                 dice game. You have {NBR_OF_DICES} dices and
                 for the every dice you have {NBR_OF_THROWS+" "}
@@ -58,21 +57,23 @@ export default Home = ({ navigation }) => {
                 your points from {MIN_SPOT} to {MAX_SPOT}.
                 Game ends when all points have been selected.
                 The order for selecting those is free.</Text>
-                <Text style={style.highlight}>POINTS:</Text>
+                <Text style={style.highlight}><MaterialCommunityIcons name="clipboard" size={24} color="#000" />POINTS:</Text>
                 <Text multiline="true" style={style.rulesText}>After each turn game calculates the sum
                 for the dices you selected. Only the dices having
                 the same spot count are calculated. Inside the
                 game you can not select same points from
                 {" "+MIN_SPOT} to {MAX_SPOT} again.
                 </Text>
-                <Text style={style.highlight}>GOAL:</Text>
+                <Text style={style.highlight}><MaterialCommunityIcons name="flag-checkered" size={24} color="#000" />GOAL:</Text>
                 <Text multiline="true" style={style.rulesText}>To get points as much as possible.
                 {" "+BONUS_POINTS_LIMIT} points is the limit of
                 getting bonus which gives you {BONUS_POINTS+" "}
                 points more.</Text>
+                <View style={style.playButtonContainer}>
                 <TouchableOpacity onPress={() => {navigation.navigate('Gameboard'); Vibration.vibrate(50);}}><Text style={style.playButton}>Play as {playerName}</Text></TouchableOpacity> 
                 {/* // PEKALLE TIEDOKSI, ETTÄ TUOSSA                            ^  OLI KYLLÄ PROPSIT PELAAJANIMEÄ VARTEN, (OLI TEHTÄVÄNANNOSSA) MUTTA KÄYTÄN REACTIN CONTEXTPROVIDERIA SEN SIJAAN, ETTÄ NIMENVAIHTO TOIMII */}
                 <TouchableOpacity onPress={() => {handleNewName(); Vibration.vibrate(50);}}><Text style={style.playButton2}>Change name</Text></TouchableOpacity>
+                </View>
                 </View>
                 </>
                 }

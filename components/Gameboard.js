@@ -246,7 +246,7 @@ export default Gameboard = ({ navigation, route}) => {
         </TouchableOpacity>
         <View style={style.iconContainer}>
         </View>
-        <Container fluid>
+        <Container style={style.gameboard} fluid>
             <Row><Text style={style.gameboardLabel}>Dice points:</Text></Row>
             <TouchableOpacity onPress={() => Alert.alert("Info",`The scores for each dice are shown here from ${MIN_SPOT} to ${MAX_SPOT}`)}><Row style={{paddingVertical: 25}}>{pointsRow}</Row></TouchableOpacity>
             <Row><Text style={style.gameboardLabel}>Select which dice you want points for:</Text></Row>
